@@ -9,11 +9,11 @@ const app = express();
 // Allowed CORS origins
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://48f7-46-143-183-105.ngrok-free.app',
-  'https://9b9a-46-143-183-105.ngrok-free.app',
-  'https://34a2-46-143-183-105.ngrok-free.app',
-  'https://billing-backend.onrender.com' // ✅ add your Render link
+  'https://billing-backend.onrender.com',
+  'https://billing-application-2.onrender.com', // ✅ your frontend Render URL
+  // any other ngrok or dev domains...
 ];
+
 
 app.use(cors({
   origin: function (origin, callback) {

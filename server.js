@@ -9,18 +9,20 @@ const app = express();
 
 // Allowed CORS origins
 const allowedOrigins = [
-  'http://localhost:5173',
-  'https://your-frontend-app.onrender.com', // replace with actual frontend URL
+  'http://localhost:5173', // your local frontend
+  'https://billing-backend-mp2p.onrender.com', // your backend frontend or another frontend
+  'https://billing-application-5.onrender.com', // your deployed frontend
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // Allow requests like curl/Postman
+    if (!origin) return callback(null, true); // allow curl/Postman requests without origin
     if (allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error(`CORS policy does not allow access from origin ${origin}`));
   },
   credentials: true,
 }));
+
 
 
 app.use(express.json());

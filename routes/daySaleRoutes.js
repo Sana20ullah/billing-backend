@@ -1,26 +1,28 @@
-const express = require('express');
+// routes/daySaleRoutes.js
+const express = require("express");
 const router = express.Router();
-const DaySale = require('../models/DaySale');
+const DaySale = require("../models/DaySale");
 
-// Save day amount
-router.post('/', async (req, res) => {
+// POST /api/daysales
+router.post("/", async (req, res) => {
   try {
-    const { totalAmount } = req.body;
-    const sale = new DaySale({ totalAmount });
-    await sale.save();
-    res.status(201).json(sale);
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to save sale', error });
-  }
-});
+    const { products, totalAmount } = req.body;
 
-// Fetch all day sales
-router.get('/', async (req, res) => {
-  try {
-    const sales = await DaySale.find().sort({ date: -1 });
-    res.json(sales);
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch sales', error });
+    if (!products || products.length === 0) {
+      return res.status(400).json({ message: "No products provided" });
+    }
+
+    const daySale = new DaySale({
+      products,
+      totalAmount,
+      // date will be set automatically by schema default
+    });
+
+    await daySale.save();
+    res.status(201).json(daySale);
+  } catch (err) {
+    console.error("Failed to save day sale:", err.message);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

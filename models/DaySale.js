@@ -1,13 +1,23 @@
 const mongoose = require("mongoose");
 
+const productSchema = new mongoose.Schema({
+  name: String,
+  qty: Number,
+  price: Number,
+});
+
 const daySaleSchema = new mongoose.Schema({
-  totalAmount: {
-    type: Number,
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now, // auto add current date
+  date: { type: Date, default: Date.now },
+  products: [productSchema],
+  totalAmount: { type: Number, required: true },
+  vat: Number,
+  discount: Number,
+  changeMoney: Number,
+  customerName: String,
+  shop: {
+    name: String,
+    address: String,
+    phone: String,
   },
 });
 

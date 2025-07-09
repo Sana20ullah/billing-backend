@@ -28,7 +28,7 @@ app.use(cors({
 app.use(express.json());
 
 // Import routes
-const shopRoutes = require('./routes/temp');
+const shopRoutes = require('./routes/shop');
 const productRoutes = require('./routes/productRoutes');
 const daySaleRoutes = require('./routes/daySaleRoutes');
 const returnRoutes = require('./routes/returnRoutes');

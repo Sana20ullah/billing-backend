@@ -16,7 +16,7 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // allow curl/Postman requests without origin
+    if (!origin) return callback(null, true); // allow curl/postman
     if (allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error(`CORS policy does not allow access from origin ${origin}`));
   },

@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-  name: String,
-  qty: Number,
-  price: Number,
+  name: { type: String, required: true },
+  qty: { type: Number, required: true, default: 1 },
+  price: { type: Number, required: true },
 });
 
 const daySaleSchema = new mongoose.Schema({
-  date: { type: Date, default: Date.now },
   products: [productSchema],
   totalAmount: { type: Number, required: true },
   vat: Number,
@@ -19,6 +18,7 @@ const daySaleSchema = new mongoose.Schema({
     address: String,
     phone: String,
   },
+  date: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("DaySale", daySaleSchema);

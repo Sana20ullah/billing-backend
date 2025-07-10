@@ -8,20 +8,21 @@ dotenv.config();
 const app = express();
 
 // Allowed CORS origins
+const cors = require("cors");
+
 const allowedOrigins = [
-  'http://localhost:5173', // your local frontend
-  'https://billing-backend-mp2p.onrender.com', // your backend frontend or another frontend
-  'https://billing-application-5.onrender.com', // your deployed frontend
+  'http://localhost:5173',
+  'https://your-frontend.vercel.app'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    console.log('CORS Origin:', origin);
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error(`CORS policy does not allow access from origin ${origin}`));
-  },
-  credentials: true,
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 
 

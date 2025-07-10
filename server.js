@@ -7,15 +7,11 @@ dotenv.config();
 
 const app = express();
 
-// Allowed CORS origins
-
-
-const cors = require("cors");
-
+// ✅ Allowed CORS origins
 const allowedOrigins = [
-  'http://localhost:5173', // local dev
-  'https://billing-application-5.onrender.com', // old frontend (optional)
-  'https://your-frontend.vercel.app' // your new Vercel frontend
+  'http://localhost:5173', // Local dev
+  'https://billing-application-5.onrender.com', // Old Render frontend
+  'https://your-frontend.vercel.app' // Your new Vercel frontend
 ];
 
 app.use(cors({
@@ -29,9 +25,6 @@ app.use(cors({
   },
   credentials: true
 }));
-
-
-
 
 app.use(express.json());
 
@@ -54,7 +47,7 @@ app.use('/api/monthsales', monthSalesRoute);
 app.get('/', (req, res) => res.send('Billing Backend API running...'));
 app.get('/api/test', (req, res) => res.json({ message: 'Test route works!' }));
 
-// 404 fallback
+// ✅ 404 fallback
 app.use((req, res) => {
   res.status(404).json({ message: 'API endpoint not found' });
 });

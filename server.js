@@ -35,6 +35,7 @@ const productRoutes = require('./routes/productRoutes');
 const daySaleRoutes = require('./routes/daySaleRoutes');
 const returnRoutes = require('./routes/returnRoutes');
 const monthSalesRoute = require('./routes/monthSales');
+const invoiceNumberRoute = require("./routes/invoiceNumber");
 
 // ✅ Register routes
 app.use('/api/shop', shopRoutes);
@@ -43,6 +44,9 @@ app.use('/api/products', productRoutes);
 app.use('/api/daysales', daySaleRoutes);
 app.use('/api/returns', returnRoutes);
 app.use('/api/monthsales', monthSalesRoute);
+app.use("/api/invoice-number", invoiceNumberRoute);
+
+
 
 // ✅ Root & test routes
 app.get('/', (req, res) => res.send('Billing Backend API running...'));
@@ -52,6 +56,10 @@ app.get('/api/test', (req, res) => res.json({ message: 'Test route works!' }));
 app.use((req, res) => {
   res.status(404).json({ message: 'API endpoint not found' });
 });
+
+
+
+
 
 // ✅ Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

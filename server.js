@@ -10,20 +10,26 @@ const app = express();
 // Allowed CORS origins
 
 
+const cors = require("cors");
+
 const allowedOrigins = [
-  'http://localhost:5173',
-  'https://your-frontend.vercel.app'
+  'http://localhost:5173', // local dev
+  'https://billing-application-5.onrender.com', // old frontend (optional)
+  'https://your-frontend.vercel.app' // your new Vercel frontend
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
+    console.log('CORS Origin:', origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error(`CORS policy does not allow access from origin: ${origin}`));
     }
-  }
+  },
+  credentials: true
 }));
+
 
 
 

@@ -10,7 +10,9 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'https://billing-application-wheat.vercel.app',
+  'https://billing-application-git-main-sana-ullahs-projects-12a76c5a.vercel.app'  // <-- Added your deployed frontend domain
 ];
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -21,6 +23,7 @@ app.use(cors({
   },
   credentials: true,
 }));
+
 
 app.use(express.json());
 

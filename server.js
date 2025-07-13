@@ -6,11 +6,11 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
-// ✅ CORS Configuration
+// ✅ Allowed CORS Origins
 const allowedOrigins = [
   'http://localhost:5173',
   'https://billing-application-wheat.vercel.app',
-  'https://billing-application-git-main-sana-ullahs-projects-12a76c5a.vercel.app'  // <-- Added your deployed frontend domain
+  'https://billing-application-git-main-sana-ullahs-projects-12a76c5a.vercel.app'
 ];
 
 app.use(cors({
@@ -24,7 +24,6 @@ app.use(cors({
   credentials: true,
 }));
 
-
 app.use(express.json());
 
 // ✅ Logger (optional)
@@ -33,7 +32,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Import and mount all routes BEFORE 404
+// ✅ Import and mount routes
 const authRoutes = require("./routes/authRoutes");
 const shopRoutes = require('./routes/shopRoutes');
 const productRoutes = require('./routes/productRoutes');
@@ -41,6 +40,7 @@ const daySaleRoutes = require('./routes/daySaleRoutes');
 const returnRoutes = require('./routes/returnRoutes');
 const monthSalesRoute = require('./routes/monthSales');
 const invoiceNumberRoute = require('./routes/invoiceNumber');
+const logoRoutes = require('./routes/logoRoutes'); // <-- Make sure this file exists!
 
 app.use("/api/auth", authRoutes);
 app.use('/api/shop', shopRoutes);
@@ -49,23 +49,24 @@ app.use('/api/daysales', daySaleRoutes);
 app.use('/api/returns', returnRoutes);
 app.use('/api/monthsales', monthSalesRoute);
 app.use("/api/invoice-number", invoiceNumberRoute);
+app.use('/api/logo', logoRoutes);
 
-// ✅ Test route
+// ✅ Simple test route
 app.get('/', (req, res) => res.send('🚀 Billing Backend API running...'));
 app.get('/api/test', (req, res) => res.json({ message: 'Test route works!' }));
 
-// ❌ 404 Fallback
+// ❌ Remove duplicated 404 handler (was written twice)
+// ❌ Error handler should come AFTER all routes
 app.use((req, res) => {
   res.status(404).json({ message: 'API endpoint not found' });
 });
 
-// ❌ Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Internal server error' });
 });
 
-// ✅ Connect to DB and Start server
+// ✅ MongoDB Connection and Server Start
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB connected');

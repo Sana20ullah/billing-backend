@@ -1,11 +1,10 @@
-// models/LogoModel.js
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const LogoSchema = new mongoose.Schema({
-  data: {
-    type: String, // base64 string
+  image: {
+    type: String, // You can use base64 or image URL
     required: true,
   },
-}, { timestamps: true });
+});
 
-module.exports = mongoose.model("Logo", LogoSchema);
+module.exports = mongoose.model('Logo', LogoSchema);

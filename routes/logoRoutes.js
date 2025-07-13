@@ -1,41 +1,22 @@
-// routes/logoRoutes.js
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Logo = require("../models/LogoModel");
+const Logo = require('../models/LogoModel'); // You must create this model
 
-// POST /api/logo — Save or Update logo
-router.post("/", async (req, res) => {
+// GET logo
+router.post('/', async (req, res) => {
   try {
-    const { data } = req.body;
-    if (!data) return res.status(400).json({ message: "No logo data provided" });
+    const { image } = req.body;
+    if (!image) return res.status(400).json({ message: 'No image provided' });
 
-    // If logo already exists, update the first one
-    let logo = await Logo.findOne();
-    if (logo) {
-      logo.data = data;
-      await logo.save();
-    } else {
-      logo = await Logo.create({ data });
-    }
+    // Replace any existing logo
+    await Logo.deleteMany({});
+    const newLogo = await Logo.create({ image });
 
-    res.status(200).json({ message: "Logo saved", logo });
+    res.json({ message: 'Logo uploaded', data: newLogo });
   } catch (err) {
-    console.error("Error saving logo:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Upload failed' });
   }
 });
 
-// GET /api/logo — Fetch logo
-router.get("/", async (req, res) => {
-  try {
-    const logo = await Logo.findOne().sort({ updatedAt: -1 });
-    if (!logo) return res.status(404).json({ message: "Logo not found" });
-
-    res.status(200).json({ data: logo.data });
-  } catch (err) {
-    console.error("Error fetching logo:", err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 module.exports = router;

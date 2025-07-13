@@ -1,19 +1,19 @@
-// routes/shopRoutes.js
 const express = require('express');
 const router = express.Router();
-const Shop = require('../models/Shop');
+const Shop = require('../models/ShopModels'); // ✅ Correct import
 
-// GET shop details
+// ✅ GET shop details
 router.get('/', async (req, res) => {
   try {
-    const shop = await Shop.findOne(); // Load from MongoDB only
+    const shop = await Shop.findOne(); // Only get the first shop
     res.json(shop || {}); // Return empty object if not found
   } catch (error) {
+    console.error("Failed to get shop data:", error);
     res.status(500).json({ message: "Failed to get shop data" });
   }
 });
 
-// POST create or update shop
+// ✅ POST to create or update shop
 router.post('/', async (req, res) => {
   try {
     const { name, address, phone } = req.body;

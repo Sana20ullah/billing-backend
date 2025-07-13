@@ -46,6 +46,7 @@ const monthSalesRoute = require('./routes/monthSales');
 const invoiceNumberRoute = require('./routes/invoiceNumber');
 const logoRoutes = require('./routes/logoRoutes'); // <-- Make sure this file exists!
 
+
 app.use("/api/auth", authRoutes);
 app.use('/api/shop', shopRoutes);
 app.use('/api/products', productRoutes);

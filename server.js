@@ -13,6 +13,10 @@ const allowedOrigins = [
   'https://billing-application-git-main-sana-ullahs-projects-12a76c5a.vercel.app'
 ];
 
+
+
+
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -74,6 +78,8 @@ mongoose.connect(process.env.MONGO_URI)
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${PORT}`);
     });
+
+    
   })
   .catch((err) => {
     console.error('❌ MongoDB connection failed:', err);
